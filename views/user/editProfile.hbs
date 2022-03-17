@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                                class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>{{user.firstname}}</h4>
+                                {{!-- <button class="btn btn-primary">Follow</button> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/profile">My Profile</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/view-address">Address</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/order-status"> My Orders</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/coupons-offers">Coupons and Offers</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/wallet">Wallet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="row justify-content-center align-items-center h-100">
+                        <div class="col-12 col-lg-9 col-xl-7">
+                            <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                                <div class="card-body p-4 p-md-5">
+                                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Edit profile</h3>
+                                    <form method="post" id="registration_form" action="/edit-profile">
+                                        <div class="row item">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-outline">
+                                                    <span class="error_form" id="fname_error_message"></span>
+                                                    <input type="text" id="form_fname" name="firstname"
+                                                        value="{{userDetails.firstname}}"
+                                                        class="form-control form-control-lg" />
+                                                    <label class="form-label" for="firstName">First Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-outline">
+                                                    <span class="error_form" id="lname_error_message"></span>
+                                                    <input type="text" id="form_sname" name="lastname"
+                                                        value="{{userDetails.lastname}}"
+                                                        class="form-control form-control-lg" />
+                                                    <label class="form-label" for="lastName">Last Name</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row item">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-outline">
+                                                    <span class="error_form" id="email_error_message"></span>
+                                                    <input type="email" id="form_email" name="email"
+                                                        value="{{userDetails.email}}" class="form-control form-control-lg" />
+                                                    <label class="form-label" for="lastName">Email ID</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-outline">
+                                                    <span class="error_form" id=""></span>
+                                                        <input type="date" name="dob" value="{{userDetails.dob}}">
+                                                    <label class="form-label" for="lastName">Date of Birth</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row item">
+                                            <div class="col-md-6 mb-4">
+                                                {{#if numExistError}}
+                                                <div class="text-danger">{{numExistError}}</div>
+                                                {{/if}}
+                                                <div class="form-outline">
+                                                    <span class="error_form" id="mob_error_message"></span>
+                                                    <input type="tel " id="form_mob" name="mobno" value="{{userDetails.mobno}}"
+                                                        class="form-control form-control-lg" />
+                                                    <label class="form-label" for="lastName">Mobile Number</label>
+                                                </div>
+                                            </div>
+                                             <div class="col-md-6 mb-4">
+                                                <div class="form-outline">
+                                                    <input type="tel " id="" name="altermobno" value="{{userDetails.altermobno}}"
+                                                        class="form-control form-control-lg" />
+                                                    <label class="form-label" for="lastName">Alternative
+                                                        Number</label>
+                                                </div>
+                                            </div>
+                                             <input type="hidden" name="id" value="{{userDetails._id}}" >
+                                        </div>
+                                        <div class="">
+                                            <input class="btn btn-success" type="submit" value="Save Details" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="" style="margin-left: 10px;margin-bottom: 10px;">
+                                    <a href="/change-password" class="btn btn-danger">Change Password</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    body {
+        color: #1a202c;
+        text-align: left;
+        background-color: #e2e8f0;
+    }
+    .item{
+        padding-top: 15px;
+    }
+
+    .main-body {
+        padding: 15px;
+    }
+
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+</style>

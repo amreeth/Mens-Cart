@@ -1,0 +1,139 @@
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                                class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>{{user.firstname}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/profile">My Profile</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/view-address">Address</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/order-status" style="color: red;"> My Orders</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/coupons-offers">Coupons and Offers</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/wallet">Wallet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row" style="display: flex;">
+                    <div>
+                        <a href="/order-status" class="btn btn-success">Back</a>
+                    </div>
+
+                    <div style="padding-left: 400px;">
+
+                        {{#if orderStatus}}
+                        <a href="/cancel-order?status=cancel&id={{orderId}}" class="btn btn-danger">Cancel Order</a>
+                        {{/if}}
+                        {{#if cancelStatus}}
+                        <h3 style="color: red;">This order is canceled</h3>
+                        {{/if}}
+                        {{#if deliveryStatus}}
+                        <h3 style="color: green;">Delivered</h3>
+                        {{/if}}
+                        {{#if shippedStatus}}
+                        <a href="/cancel-order?status=cancel&id={{orderId}}" class="btn btn-danger">Cancel Order</a>
+                        {{/if}}
+                    </div>
+                </div>
+                <div style="margin-top: 8px;">
+                    <h4>Delivery Address</h4>
+                    <div class="" style="width:40%;border-radius: 10px; border-style:double;border-color: black;">
+                        <dl style="margin-left: 10px;">
+                            <dt style="margin: 5px;">{{address.firstname}}</dt>
+                            <dt style="margin: 5px;">{{address.lastname}}</dt>
+                            <dt style="margin: 5px;">{{address.address}},{{address.city}}</dt>
+                            <dt style="margin: 5px;">{{address.country}},{{address.zipcode}}</dt>
+                            <dt style="margin: 5px;">{{address.tel}}</dt>
+                            <dt>{{orderDetails.paymentMethod}}</dt>
+                        </dl>
+                    </div>
+                </div>
+                <div>
+                    <table class="table" style="margin-top: 20px;">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" style="width: 15%;">Image</th>
+                                <th scope="col" style="width: 25%;">Product Name</th>
+                                <th scope="col" style="width: 20%;">Brand</th>
+                                <th scope="col" style="width: 10%;">Quantity</th>
+                                <th scope="col" style="width: 15%;">Price</th>
+                                <th scope="col" style="width: 15%;">Expected delivery</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each orderDetails}}
+                            <tr>
+                                <td><img style="width:100%;" src="/product-images/{{orders._id}}.jpg"></td>
+                                <td>{{orders.name}}</td>
+                                <td>{{orders.brand}}</td>
+                                <td>{{products.quantity}}</td>
+                                <td>{{orders.price}}</td>
+                                <td></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    body {
+        color: #1a202c;
+        text-align: left;
+        background-color: #e2e8f0;
+    }
+
+    .main-body {
+        padding: 15px;
+    }
+
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 330px;
+    }
+</style>

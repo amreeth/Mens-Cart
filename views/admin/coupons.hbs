@@ -1,0 +1,59 @@
+<div class="main_content_iner ">
+    <div class="container-fluid p-0">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="white_card card_height_100 mb_30">
+                    <div class="white_card_header">
+                        <div class="box_header m-0">
+                            <div class="main-title">
+                                <h3 class="m-0">Coupons</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                        <div class="QA_section">
+                            <div class="white_box_tittle list_header">
+                                <div class="box_right d-flex lms_block">
+                                    
+                                    <div class="add_button ml-10">
+                                        <a href="/admin/addcoupn" type="submit"><button type="button" class="btn btn-success">Add Coupon</button></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="QA_table mb_30">
+                                <!-- table-responsive -->
+                                <table class="table lms_table_active3 ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Discount Price</th>
+                                            <th scope="col">From Date</th>
+                                            <th scope="col">End Date</th>
+                                            <th scope="col">Manage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each coupons}}
+                                        <tr>
+                                            <th scope="row">{{@index}}</th>
+                                            <td>{{this.coupon}}</td>
+                                            <td>{{this.price}}</td>
+                                            <td>{{this.fromdate}}</td>
+                                            <td>{{this.todate}}</td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,156 @@
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row" style="margin-left:55rem;">
+			{{#if discount}}
+			<div>
+				<h3 style="color: red;">Coupon Appiled</h3>
+			</div>
+			{{else}}
+			<div class="coupon">
+				<h3 id="CouponMsg"></h3>
+				<form id="ApplyCoupon" style="display: flex;">
+					<input type="text" name="coupon"
+						style="padding: 12px 20px; margin: 8px 0;box-sizing: border-box;border: 2px solid red; border-radius: 4px;"
+						placeholder="Enter Your Coupon">
+					<div class="button" style="padding: 8px;">
+						<button type="submit" class="btn btn-success">Apply Coupon</button>
+					</div>
+				</form>
+			</div>
+			{{/if}}
+		</div>
+
+		<div class="row" style="margin-top: 20px;">
+			<form action="" id="checkout-form">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="row" style="display: flex;">
+							<div class="col-6" style="padding-left: 35px;">
+								<h3>Select Delivery Address</h3>
+							</div>
+							<div class="col-6" style="padding-left: 50px;">
+								<a href="/add-address" class="btn btn-danger">Add Address</a>
+							</div>
+						</div>
+						<div class="" style="width: 68%;margin-top: 2rem;">
+							{{#each address}}
+							<div class=""
+								style="width:100%;border-radius: 10px; border-style:double;border-color: black;margin:25px;">
+								<input type="radio" name="addressid" value="{{this._id}}" checked>
+								<dl style="margin-left: 30px;">
+									<dt style="margin: 8px;">{{this.firstname}}</dt>
+									<dt style="margin: 8px;">{{this.email}}</dt>
+									<dt style="margin: 8px;">{{this.address}}</dt>
+									<dt style="margin: 8px;">{{this.city}}</dt>
+									<dt style="margin: 8px;">{{this.zipcode}}</dt>
+
+									<dt style="margin: 8px;">{{this.tel}}</dt>
+									<div>
+										<a href="/edit-address/{{this._id}}" class="btn btn-info"
+											style="margin-bottom: 4px;">Edit</a>
+									</div>
+								</dl>
+							</div>
+							{{/each}}
+						</div>
+					</div>
+					<!-- Order Details -->
+					<div class="col-md-5 order-details">
+						<div class="order-summary">
+							<div class="order-col">
+								<div><strong>PRICE DETAILS</strong></div>
+								<div><strong>TOTAL </strong></div>
+							</div>
+							<div class="order-col">
+								<div>Total On MRP</div>
+								<div><span>
+										<h4 style="color: rgb(172, 17, 17);"><i class="fa fa-inr"
+												aria-hidden="true"></i>{{mrp}}</h4>
+									</span>
+								</div>
+							</div>
+							{{!-- <div class="order-col" hidden>
+								<div>Total</div>
+								<div><strong><span id="tootal">{{total}}</span></strong></div>
+							</div> --}}
+
+							<div class="hidden"><span id="tootal">{{total}}</span></div>
+
+							{{#if mrpDiscount}}
+							<div class="order-col">
+								<div>Discount On MRP</div>
+								<div style="color: green;"><span> - <i class="fa fa-inr"
+											aria-hidden="true"></i>{{mrpDiscount}}</span></div>
+							</div>
+							{{/if}}
+
+
+							
+							<div class="order-col">
+								<div>Coupon Discount</div>
+								<div style="color: green;"><span id="coupon"> - <i class="fa fa-inr"
+											aria-hidden="true"></i>{{discount}}</span></div>
+							</div>
+							
+
+
+							{{#if wallet}}
+							<div class="order-products">
+								<div class="order-col">
+									<div>Wallet Amount</div>
+									<input type="checkbox" id="wallet" name="checked" onclick="checkWallet('100','{{grandTotal}}')" value="100"/>
+									<div><strong><i class="fa fa-inr" aria-hidden="true"></i>{{wallet}}</strong></div>
+								</div>
+							</div>
+							{{/if}}
+							<div class="order-col">
+								<div><strong>GRAND TOTAL</strong></div>
+								<div><strong class="order-total"><span id="total"> <i class="fa fa-inr"
+												aria-hidden="true"></i>{{grandTotal}}</span></strong></div>
+							</div>
+						</div>
+						<div class="payment-method">
+							<div class="input-radio">
+								<input type="radio" name="payment-method" value="COD" id="payment-1" checked>
+								<label for="payment-1">
+									<span></span>
+									Cash on Delivery
+								</label>
+							</div>
+							<div class="input-radio">
+								<input type="radio" name="payment-method" value="ONLINE" id="payment-2">
+								<label for="payment-2">
+									<span></span>
+									RazorPay
+								</label>
+							</div>
+							<div class="input-radio">
+								<input type="radio" name="payment-method" value="PAYPAL" id="payment-3">
+								<label for="payment-3">
+									<span></span>
+									Paypal
+								</label>
+							</div>
+						</div>
+						<button class="primary-btn order-submit">Place order</button>
+					</div>
+					<!-- /Order Details -->
+				</div>
+			</form>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+<script>
+    $(document).ready(function () {
+        function disableBack() { window.history.forward() }
+
+        window.onload = disableBack();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+    });
+</script>

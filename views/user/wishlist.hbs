@@ -1,0 +1,73 @@
+<section>
+    <div class="row">
+        {{#if allWishlistItems }}
+        <!-- product -->
+        {{#each allWishlistItems}}
+        <div class="col-md-3 col-12 col-xs-6">
+            <div class="product">
+                <div class="product-img">
+                    <img src="/product-images/{{this.product._id}}.jpg" alt="">
+                    <div class="product-label">
+                    </div>
+                </div>
+                <div class="product-body">
+                    <p class="product-category">{{this.product.brand}}</p>
+                    <h3 class="product-name"><a href="/product-view/{{this._id}}">{{this.product.name}}</a></h3>
+
+                    <h4 class="product-price"><i class="fa fa-inr" aria-hidden="true"></i>{{this.product.price}}
+                        {{#if this.product.OldPrice}}
+                        <del class="product-old-price"><i class="fa fa-inr"
+                                aria-hidden="true"></i>{{this.product.OldPrice}}</del>
+                        {{/if}}
+                    </h4>
+                    <div style="display: flex;align-content: space-between;">
+                        <button onclick="addToCart('{{this.product._id}}')" class="add-to-cart-btn"><i
+                                class="fa fa-shopping-cart">Add to Cart</i></button>
+                        <button onclick="removeWishlist('{{this.product._id}}')" style="margin-left: 10px;">X</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+        {{else}}
+        <div style="display:block;margin-left: auto;margin-right: auto;width: 50%;">
+            <img src="/images/user/wishlist.jpg">
+            <div style="margin-left: auto;margin-right: auto;display: block;">
+                <a style="margin-left: 170px;" href="/" class="btn btn-success" >CONTINUE SHOPPING</a>
+            </div>
+        </div>
+        {{/if}}
+        <!-- /product -->
+    </div>
+</section>
+<script>
+    function addToCart(proId) {
+        $.ajax({
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (response) => {
+
+                if (response.status) {
+                    let count = $('#cart-count').html()
+                    count = parseInt(count) + 1
+                    $('#cart-count').html(count)
+                }
+            }
+        })
+    }
+
+    function removeWishlist(proId) {
+        $.ajax({
+            url: '/remove-wishlist/' + proId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    location.reload()
+                }
+            }
+        })
+    }
+
+</script>

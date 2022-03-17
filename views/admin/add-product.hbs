@@ -1,0 +1,308 @@
+{{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+
+<div class="col-md-9">
+  <section class="p-3">
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="text center"> Add Product </h2>
+          <form action="/admin/add-product" id="formAddProd" method="post" enctype="multipart/form-data">
+
+            <span class="error_form" id="name_error_message"></span>
+            <label form="">Name</label>
+            <input type="text" name="name" id="form_name" class="form-control">
+
+            <span class="error_form" id="brand_error_message"></span>
+            <label form="">Brand</label>
+            <input type="text" name="brand" id="form_brand" class="form-control">
+
+
+            <span class="error_form" id="description_error_message"></span>
+            <label form="">Description</label>
+            <input type="text" name="description" id="form_description" class="form-control">
+
+            <span class="error_form" id="price_error_message"></span>
+            <label form="">Price</label>
+            <input type="text" name="price" id="form_price" class="form-control">
+            <br>
+            {{!-- <label form="">Discount</label>
+            <input type="number" name="discount" id="" class="form-control"><br> --}}
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Category</label>
+              </div>
+              <select class="custom-select" id="category" name="category">
+                <option selected>Choose...</option>
+                {{#each listCategory}}
+                <option value="{{this.catname}}">{{this.catname}}</option>
+                {{/each}}
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Sub Category</label>
+              </div>
+              <select class="custom-select" id="subcategory" name="subcategory">
+
+                <option selected>Choose...</option>
+                {{#each listSubcategory}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+
+              </select>
+
+            </div>
+
+            <span class="error_form" id="quantity_error_message"></span>
+            <label form="">Quantity</label>
+            <input type="text" name="quantity" id="form_quantity" class="form-control">
+            <br>
+
+            {{!-- <span class="error_form" id="image1_error_message"></span>
+            <label class="form-label" id="img1" for="customFile">Image-1</label>
+            <input type="file" class="form-control" id="customFile" name="image1" /> --}}
+
+
+            <img src="" id="imgView1" alt="" style="width:100px">
+            <input type="file" id="id_image1" name="image1" accept="image/*" onchange="viewImage1(event)"><br>
+            <div id="image-box1" class="image-container"></div>
+
+            <img src="" id="imgView2" alt="" style="width:100px">
+            <input type="file" id="id_image2" name="image2" accept="image/*" onchange="viewImage2(event)"><br>
+            <div id="image-box2" class="image-container"></div>
+
+            <img src="" id="imgView3" alt="" style="width:100px">
+            <input type="file" id="id_image3" name="image3" accept="image/*" onchange="viewImage3(event)"><br>
+            <div id="image-box3" class="image-container"></div>
+
+            <button class="btn btn-outline-info" id="crop-btn1" style="width: 100%; margin-top: 10px; display: none;"
+              type="button">Crop</button>
+
+            <br>
+            {{!-- <label class="form-label" for="customFile">Image 2</label>
+            <input type="file" class="form-control" id="customFile" />
+            <br>
+            <label class="form-label" for="customFile">Image 3</label>
+            <input type="file" class="form-control" id="customFile" />
+            <br> --}}
+
+            <button type="submit" class="btn btn-primary btn-lg">Add Product</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  
+  const imagebox1 = document.getElementById('image-box1')
+  const crop_btn1 = document.getElementById('crop-btn1')
+  const input1 = document.getElementById('id_image1')
+   function viewImage1(event){
+        document.getElementById('imgView1').src=URL.createObjectURL(event.target.files[0])
+    }
+  // When user uploads the image this event will get triggered
+  input1.addEventListener('change', () => {
+    // Getting image file object from the input variable
+    const img_data1 = input1.files[0]
+    // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+    // The new object URL represents the specified File object or Blob object.
+    const url1 = URL.createObjectURL(img_data1)
+    // Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+    imagebox1.innerHTML = `<img src="${url1}" id="image1" style="width:100%;">`
+    // Storing that cropping view image in a variable
+    const image1 = document.getElementById('image1')
+    
+    // Displaying the image box
+    document.getElementById('image-box1').style.display = 'block'
+    // Displaying the Crop buttton
+    document.getElementById('crop-btn1').style.display = 'block'
+    // Hiding the Post button
+    const cropper1 = new Cropper(image1, {
+      autoCropArea: 1,
+      viewMode: 1,
+      scalable: false,
+      zoomable: false,
+      movable: false,
+      minCropBoxWidth: 200,
+      minCropBoxHeight: 200,
+    })
+    // When crop button is clicked this event will get triggered
+    crop_btn1.addEventListener('click', () => {
+      // This method coverts the selected cropped image on the cropper canvas into a blob object
+      cropper1.getCroppedCanvas().toBlob((blob) => {
+        // Gets the original image data
+        let fileInputElement1 = document.getElementById('id_image1');
+        // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+        let file1 = new File([blob], img_data1.name, { type: "image/*", lastModified: new Date().getTime() });
+        // Create a new container
+        let container1 = new DataTransfer();
+        // Add the cropped image file to the container
+        container1.items.add(file1);
+        // Replace the original image file with the new cropped image file
+        fileInputElement1.files = container1.files;
+        document.getElementById('imgView1').src= URL.createObjectURL(fileInputElement1.files[0])
+        // Hide the cropper box
+        document.getElementById('image-box1').style.display = 'none'
+        // Hide the crop button
+        document.getElementById('crop-btn1').style.display = 'none'
+      })
+    })
+  })
+</script>
+
+<script>
+
+  $("#name_error_message").hide()
+  $("#brand_error_message").hide()
+  $("#description_error_message").hide()
+  $("#price_error_message").hide()
+  $("#quantity_error_message").hide()
+  $("image1_error_message").hide()
+  var error_name = false;
+  var error_brand = false;
+  var error_description = false;
+  var error_price = false;
+  var error_quantity = false;
+  var error_image1 = false;
+
+  $("#form_name").focusout(function () {
+
+    check_name();
+  });
+  $("#form_brand").focusout(function () {
+    check_brand();
+  });
+  $("#form_description").focusout(function () {
+    check_description();
+  });
+  $("#form_price").focusout(function () {
+    check_price();
+  });
+  $("#form_quantity").focusout(function () {
+    check_quantity();
+  });
+  $("#img1").focusout(function () {
+    check_image1();
+  });
+
+   function check_image1() {
+        var image1 = $("#img1").val();
+        if (image1 !== "") {
+          $("#image1_error_message").hide();
+          $("#img1").css("border-bottom", "2px solid #34F458");
+
+        } else {
+          $("#image1_error_message").html("choose image");
+          $("#image1_error_message").show();
+          $("#img1").css("border-bottom", "2px solid #F90A0A");
+          error_image1 = true;
+        }
+   }
+    
+
+
+  function check_name() {
+    var pattern = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
+    var name = $("#form_name").val();
+
+    if (pattern.test(name) && name !== '') {
+      $("#name_error_message").hide();
+      $("#form_name").css("border-bottom", "2px solid #34F458");
+    } else {
+      $("#name_error_message").html("Should contain only Characters");
+      $("#name_error_message").show();
+      $("#form_name").css("border-bottom", "2px solid #F90A0A");
+      error_name = true;
+    }
+  }
+
+  function check_brand() {
+    var pattern = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
+    var brand = $("#form_brand").val()
+    if (pattern.test(brand) && brand !== '') {
+      $("#brand_error_message").hide();
+      $("#form_brand").css("border-bottom", "2px solid #34F458");
+    } else {
+      $("#brand_error_message").html("Should contain only Characters");
+      $("#brand_error_message").show();
+      $("#form_brand").css("border-bottom", "2px solid #F90A0A");
+      error_brand = true;
+    }
+  }
+
+  function check_description() {
+    var pattern = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
+    var description = $("#form_brand").val()
+    if (pattern.test(description) && description !== '') {
+      $("#description_error_message").hide();
+      $("#form_description").css("border-bottom", "2px solid #34F458");
+    } else {
+      $("#description_error_message").html("Should contain only Characters");
+      $("#description_error_message").show();
+      $("#form_description").css("border-bottom", "2px solid #F90A0A");
+      error_description = true;
+    }
+  }
+
+  function check_price() {
+    var pattern = /^[0-9]*$/;
+    var price = $("#form_price").val();
+    if (pattern.test(price) && price !== '') {
+      $("#price_error_message").hide();
+      $("#form_price").css("border-bottom", "2px solid #34F458");
+    } else {
+      $("#price_error_message").html("Invalid number");
+      $("#price_error_message").show();
+      $("#form_price").css("border-bottom", "2px solid #F90A0A");
+      error_price = true;
+    }
+  }
+
+  function check_quantity() {
+    var pattern = /^\d{0,8}(\.\d{1,4})?$/;
+    var quantity = $("#form_quantity").val();
+    if (pattern.test(quantity) && quantity !== '') {
+      $("#quantity_error_message").hide();
+      $("#form_quantity").css("border-bottom", "2px solid #34F458");
+    } else {
+      $("#quantity_error_message").html("Invalid number");
+      $("#quantity_error_message").show();
+      $("#form_quantity").css("border-bottom", "2px solid #F90A0A");
+      error_quantity = true;
+    }
+  }
+
+  $("#formAddProd").submit(function () {
+    error_name = false;
+    error_brand = false;
+    error_description = false;
+    error_price = false;
+    error_quantity = false;
+    error_image1 = false;
+
+    check_image1();
+    check_name();
+    check_brand();
+    check_description();
+    check_price();
+    check_quantity();
+
+    if (error_name === false && error_brand === false && error_description === false && error_price === false && error_quantity === false && error_image1 == false) {
+      return true;
+    } else {
+      alert("Please Fill the form Correctly");
+      return false;
+    }
+
+
+  });
+
+
+</script>

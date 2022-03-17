@@ -1,0 +1,226 @@
+<header>
+	<!-- /TOP HEADER -->
+
+	<!-- MAIN HEADER -->
+	<div id="header">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- LOGO -->
+				<div class="col-md-2">
+					<a href="/">
+						<h1>Mens cart</h1>
+					</a>
+				</div>
+				<!-- /LOGO -->
+
+				<!-- SEARCH BAR -->
+				<div class="col-md-5">
+					<div class="header-search">
+						<form>
+							<input style="width:20rem;" class="input" placeholder="Search here" id="searchbar" onkeyup="search_product()"
+								id="myInput">
+							<button class="search-btn">Search</button>
+						</form>
+					</div>
+				</div>
+				<!-- /SEARCH BAR -->
+
+				<!-- ACCOUNT -->
+				<div class="col-md-4 ">
+					<div class="header-ctn">
+
+						<!-- Wishlist -->
+						<div>
+							<a href="/wishlist">
+								<i class="fa fa-heart-o"></i>
+								<span>Your Wishlist</span>
+								{{!-- <div class="qty"></div> --}}
+							</a>
+						</div>
+						<!-- /Wishlist -->
+						<!-- cart -->
+						<div>
+							<a href="/cart">
+								<i class="fa fa-shopping-cart"></i>
+								<span>Cart</span>
+								{{#if cartCount}}
+								<div class="qty" id="cart-count">{{cartCount}}</div>
+								{{/if}}
+							</a>
+						</div>
+						<!-- /cart -->
+						<!-- My account -->
+
+						{{#if user}}
+						<div>
+							<a href="/profile">
+								<i class="fa fa-user"></i>
+								<span>My account</span>
+							</a>
+						</div>
+						<div>
+							<a href="/logout">
+								<i class="fa fa-sign-out" style="font-size:18px;color:red"></i>
+								<span>Logout</span>
+							</a>
+						</div>
+						{{else}}
+						<div>
+							<a href="/login">
+								<i class="fa fa-user"></i>
+								<span>My account</span>
+							</a>
+						</div>
+						{{/if}}
+
+
+						<!-- /My account -->
+						<!-- Menu Toogle -->
+						<div class="menu-toggle">
+							<a href="#">
+								<i class="fa fa-bars"></i>
+								<span>Menu</span>
+							</a>
+						</div>
+						<!-- /Menu Toogle -->
+					</div>
+				</div>
+				<!-- /ACCOUNT -->
+			</div>
+			<!-- row -->
+		</div>
+		<!-- container -->
+	</div>
+	<!-- /MAIN HEADER -->
+	<!-- NAVIGATION -->
+	<nav id="navigation">
+		<!-- container -->
+		<div class="container">
+			<!-- responsive-nav -->
+			<div id="responsive-nav">
+				<!-- NAV -->
+				<ul class="main-nav nav navbar-nav">
+					{{#if home}}
+					<li class="active"><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					
+					{{/if}}
+
+					{{#if topwears}}
+					<li><a href="/">Home</a></li>
+					<li class="active"><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+
+					{{#if bottamwear}}
+					<li><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li class="active"><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+					{{#if casualShirt}}
+					<li><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li class="active"><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+
+					{{#if jeans}}
+					<li><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li class="active"><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+					{{#if tshirt}}
+					<li><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li class="active"><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+					{{#if casualTrousers}}
+					<li><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li class="active"><a href="/casual-trousers">Casual Trousers</a></li>
+					<li><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+
+					
+					{{#if formalshirt}}
+					<li><a href="/">Home</a></li>
+					<li><a href="/topwears">Top Wears</a></li>
+					<li><a href="/bottamwear">Bottam Wears</a></li>
+					<li><a href="/casual-shirt">Casual Shirts</a></li>
+					<li><a href="/jeans">Jeans</a></li>
+					<li><a href="/tshirt">T-shirts</a></li>
+					<li><a href="/casual-trousers">Casual Trousers</a></li>
+					<li class="active"><a href="/formal-shirt">Formal Shirts</a></li>
+					{{/if}}
+
+
+				</ul>
+				<!-- /NAV -->
+			</div>
+			<!-- /responsive-nav -->
+		</div>
+		<!-- /container -->
+	</nav>
+	<!-- /NAVIGATION -->
+
+</header>
+<script>
+	function search_product() {
+		let input = document.getElementById('searchbar').value
+		input = input.toLowerCase();
+		let x = document.getElementsByClassName('product-category');
+		let d = document.getElementsByClassName('hide-div')
+		for (i = 0; i < x.length; i++) {
+			if (!x[i].innerHTML.toLowerCase().includes(input)) {
+				x[i].style.display = "none";
+				d[i].style.display = "none";
+			}
+			else {
+				x[i].style.display = "list-item";
+				d[i].style.display = "block";
+			}
+		}
+	}
+</script>

@@ -1,0 +1,29 @@
+<div class="col-md-6">
+    <div class="row p-5">
+        <form action="/admin/addcategory" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1" style="font-size:x-large;color: brown;">Add category</label>
+                <input type="text" class="form-control" id="category" name="catname" placeholder="Enter new Category">
+
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="row p-5">
+      <form action="/admin/addsubcategory" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1" style="font-size:x-large;color: brown;">Add Sub Category</label>
+                <br>
+                <label>Select Category</label>
+                <select name="category" id="categorysubcategory">
+                    {{#each listCategory}}
+                    <option>{{this.catname}}</option>
+                    {{/each}}
+                </select><br>
+                <input type="text" class="form-control" id="subcategory" name="subcategory" placeholder="Enter New Sub Category">
+
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-3">
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Brands</h3>
+                    <div class="checkbox-filter">
+                        {{#each casualShirt}}
+                        <div class="input-checkbox">
+
+                            <label for="category-1">
+                                <span></span>   
+                                {{this.brand}}
+
+                            </label>
+                        </div>
+                        {{/each}}
+
+                    </div>
+                </div>
+                <!-- /aside Widget -->
+
+                <!-- aside Widget -->
+
+                <!-- /aside Widget -->
+
+                <!-- aside Widget -->
+
+                <!-- /aside Widget -->
+
+                <!-- aside Widget -->
+
+                <!-- /aside Widget -->
+            </div>
+            <!-- /ASIDE -->
+
+            <!-- STORE -->
+            <div id="store" class="col-md-9">
+                <!-- store top filter -->
+
+                <!-- /store top filter -->
+
+                <!-- store products -->
+                <div class="row">
+                    <!-- product -->
+                    {{#each casualShirt}}
+                    <div class="col-md-4 col-xs-6">
+                        <div class="product">
+
+                            <div class="product-img">
+
+                                <img src="/product-images/{{this._id}}.jpg" alt="">
+                                <div class="product-label">
+                                    <button onclick="addToWishlist('{{this._id}}')" class="add-to-wishlist"><i
+                                            class="fa fa-heart-o"></i><span class="tooltipp"></span></button>
+                                </div>
+
+                                <div class="product-label">
+                                </div>
+                            </div>
+                            <div class="product-body">
+
+                                <p class="product-category">{{this.brand}}</p>
+
+                                <h3 class="product-name"><a href="/product-view/{{this._id}}">{{this.name}}</a></h3>
+                                <h4 class="product-price"><i class="fa fa-inr" aria-hidden="true"></i>{{this.price}}
+                                    {{#if this.OldPrice}}
+                                    <del class="product-old-price"><i class="fa fa-inr"
+                                            aria-hidden="true"></i>{{this.OldPrice}}</del>
+                                    {{/if}}
+                                </h4>
+                            </div>
+                            <div class="add-to-cart">
+                                <button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn"><i
+                                        class="fa fa-shopping-cart"></i> add to cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <!-- /product -->
+                </div>
+                <!-- /store products -->
+
+                <!-- store bottom filter -->
+
+                <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+
+
+<script>
+    function addToCart(proId) {
+        $.ajax({
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (response) => {
+
+                if (response.status) {
+                    Swal.fire('Item added to Cart')
+                    let count = $('#cart-count').html()
+                    count = parseInt(count) + 1
+                    $('#cart-count').html(count)
+                } else {
+                    Swal.fire('Login first!',)
+                }
+            }
+        })
+    }
+</script>
+<script>
+	function search_product() {
+		let input = document.getElementById('searchbar').value
+		input = input.toLowerCase();
+		let x = document.getElementsByClassName('product-name');
+		let d = document.getElementsByClassName('product')
+		for (i = 0; i < x.length; i++) {
+			if (!x[i].innerHTML.toLowerCase().includes(input)) {
+				x[i].style.display = "none";
+				d[i].style.display = "none";
+			}
+			else {
+				x[i].style.display = "list-item";
+				d[i].style.display = "block";
+			}
+		}
+	}
+</script>

@@ -1,0 +1,206 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- Product main img -->
+			<div class="col-md-5 col-md-push-2">
+				<div id="product-main-img">
+					<div class="product-preview">
+						<img src="/product-images/{{product._id}}.jpg" alt="">
+					</div>
+
+					{{!-- <div class="product-preview">
+						<img src="/product-images/{{product._id}}image2.jpg" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="/product-images/{{product._id}}image3.jpg" alt="">
+					</div> --}}
+
+					{{!-- <div class="product-preview">
+						<img src="./img/product08.png" alt="">
+					</div> --}}
+
+				</div>
+			</div>
+			<!-- /Product main img -->
+
+			<!-- Product thumb imgs -->
+			<div class="col-md-2  col-md-pull-5">
+				<div id="product-imgs">
+					<div class="product-preview" >
+						<img src="/product-images/{{product._id}}.jpg" alt="">
+					</div>
+
+					<div class="product-preview" id="img-container">
+						<img src="/product-images/{{product._id}}image2.jpg" alt="">
+					</div>
+
+					<div class="product-preview" id="img-container2">
+						<img src="/product-images/{{product._id}}image3.jpg" alt="">
+					</div>
+
+					{{!-- <div class="product-preview">
+						<img src="./img/product08.png" alt="">
+					</div> --}}
+				</div>
+
+			</div>
+			<!-- /Product thumb imgs -->
+
+			<!-- Product details -->
+			<div class="col-md-5">
+				<div class="product-details">
+					<h2 class="product-name">{{product.brand}}</h2>
+					<h5 class="">{{product.name}}</h5>
+					<div>
+						<h3 class="product-price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.price}}<br>
+							<del class="product-old-price"><i class="fa fa-inr"
+									aria-hidden="true"></i>{{product.OldPrice}}</del>
+						</h3>
+						<span class="product-available">In Stock</span>
+					</div>
+					<p>{{product.description}}</p>
+					<div class="add-to-cart">
+						{{!-- <div class="qty-label">
+							Qty
+							<div class="input-number">
+								<input type="number">
+								<span class="qty-up">+</span>
+								<span class="qty-down">-</span>
+							</div>
+						</div> --}}
+						<button onclick="addToCart('{{product._id}}')" class="add-to-cart-btn"><i
+								class="fa fa-shopping-cart"></i> add to cart</button>
+					</div>
+
+					<ul class="product-btns">
+						<li><button onclick="addToWishlist('{{product._id}}')" class="add-to-wishlist"><i
+									class="fa fa-heart-o"></i><span class="tooltipp"></span></button> add to wishlist
+						</li>
+						{{!-- <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li> --}}
+					</ul>
+
+					<ul class="product-links">
+						<li>Category:</li>
+						<li><a href="#">{{product.category}}</a></li>
+					</ul>
+
+					<ul class="product-links">
+						<li>Share:</li>
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						<li><a href="#"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+
+				</div>
+			</div>
+			<!-- /Product details -->
+
+			<!-- Product tab -->
+
+			<!-- /product tab -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+
+<style>
+	.preview {
+		display: none;
+		margin-left: 15px;
+		width: 640px;
+		height: 400px;
+		border: 3px solid orange;
+	}
+
+	.cursor-overlay {
+		display: none;
+		background-color: rgba(0, 150, 50, 0.5);
+		position: fixed;
+		pointer-events: none;
+	}
+
+	.thumb:hover {
+		-moz-box-shadow: 0 0 5px orange;
+		-webkit-box-shadow: 0 0 5px orange;
+		box-shadow: 0 0 5px orange;
+	}
+</style>
+
+
+<script>
+	function addToCart(proId) {
+		$.ajax({
+			url: '/add-to-cart/' + proId,
+			method: 'get',
+			success: (response) => {
+
+				if (response.status) {
+					Swal.fire(
+						'Item added to Cart!',
+					)
+					let count = $('#cart-count').html()
+					count = parseInt(count) + 1
+					$('#cart-count').html(count)
+				} else {
+					Swal.fire(
+						'Login First!',
+					)
+				}
+			}
+		})
+	}
+
+
+	function addToWishlist(proId) {
+
+		$.ajax({
+			url: '/add-to-wishlist/' + proId,
+			method: 'get',
+			success: (response) => {
+				if (response.status) {
+					Swal.fire('Item added to Wishlist',)
+				} else {
+					Swal.fire('Login first!',)
+				}
+			}
+		})
+	}
+</script>
+
+<script>
+	var options = {
+		width: 120,
+		zoomWidth: 380,
+		offset: { vertical: 0, horizontal: 10 }
+	};
+	new ImageZoom(document.getElementById("img-container"), options);
+
+</script>
+<script>
+	var options = {
+		width: 350,
+		zoomWidth: 380,
+		offset: { vertical: 0, horizontal: 10 }
+	};
+	new ImageZoom(document.getElementById("img-container1"), options);
+
+</script>
+<script>
+	var options = {
+		width: 120,
+		zoomWidth: 380,
+		offset: { vertical: 0, horizontal: 10 }
+	};
+	new ImageZoom(document.getElementById("img-container2"), options);
+
+</script>

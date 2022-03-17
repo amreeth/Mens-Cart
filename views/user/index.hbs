@@ -1,0 +1,258 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+
+			<!-- section title -->
+			<div class="col-md-12">
+				<div class="section-title">
+					<h3 class="title">What's New</h3>
+					{{!-- <div class="section-nav">
+						<ul class="section-tab-nav tab-nav">
+							<li><a data-toggle="tab" href="/casual-shirt">Casual Shirts</a></li>
+							<li><a data-toggle="tab" href="#tab1">Formal shirts</a></li>
+							<li><a data-toggle="tab" href="#tab1">T-shirts</a></li>
+							<li><a data-toggle="tab" href="#tab1">Jeans</a></li>
+							<li><a data-toggle="tab" href="#tab1">Formal Trousers</a></li>
+						</ul>
+					</div> --}}
+				</div>
+			</div>
+			<!-- /section title -->
+
+			<!-- Products tab & slick -->
+			<div class="col-md-12">
+				<div class="row">
+					<div class="products-tabs">
+						<!-- tab -->
+						<div id="tab1" class="tab-pane active">
+							<div class="products-slick" data-nav="#slick-nav-1">
+								<!-- product -->
+
+								{{#each products}}
+								<div class="product">
+									<div class="product-img">
+										<img src="/product-images/{{this._id}}.jpg" alt="">
+										<div class="product-label">
+
+											<button onclick="addToWishlist('{{this._id}}')" class="add-to-wishlist"><i
+													class="fa fa-heart-o"></i><span class="tooltipp"></span></button>
+
+											{{#if this.offerPercentage}}
+											<span class="sale">{{this.offerPercentage}}%</span>
+											{{/if}}
+											<span class="new">NEW</span>
+										</div>
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{this.brand}}</p>
+										<h3 class="product-name"><a href="/product-view/{{this._id}}">{{this.name}}</a>
+										</h3>
+										<h4 class="product-price"><i class="fa fa-inr"
+												aria-hidden="true"></i>{{this.price}}
+											<del class="product-old-price"><i class="fa fa-inr"
+													aria-hidden="true"></i>{{this.OldPrice}}</del>
+										</h4>
+									</div>
+									<div class="add-to-cart">
+										<button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn"><i
+												class="fa fa-shopping-cart"></i> add to cart</button>
+									</div>
+								</div>
+								{{/each}}
+
+
+							</div>
+						</div>
+						<!-- /tab -->
+					</div>
+				</div>
+			</div>
+			<!-- Products tab & slick -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+
+<!-- HOT DEAL SECTION -->
+<div id="hot-deal" class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hot-deal">
+					<ul class="hot-deal-countdown">
+						<li>
+							<div>
+								<h3>02</h3>
+								<span>Days</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<h3>10</h3>
+								<span>Hours</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<h3>34</h3>
+								<span>Mins</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<h3>60</h3>
+								<span>Secs</span>
+							</div>
+						</li>
+					</ul>
+					<h2 class="text-uppercase">hot deal this week</h2>
+					<p>Top Wear Collection Up to 20% OFF</p>
+					<a class="primary-btn cta-btn" href="/topwears">Shop now</a>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /HOT DEAL SECTION -->
+
+<!-- SECTION -->
+
+<!-- /SECTION -->
+
+<!-- SECTION -->
+
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-4 col-xs-6">
+				<div class="section-title">
+					<h4 class="title"> Top Selling Casual Shirts</h4>
+					<div class="section-nav">
+						<div id="slick-nav-3" class="products-slick-nav"></div>
+					</div>
+				</div>
+
+				<div class="products-widget-slick" data-nav="#slick-nav-3">
+					<div>
+						<!-- product widget -->
+						{{#each casualShirtFront}}
+						<div class="product-widget">
+							<div class="product-img">
+								<img src="/product-images/{{this._id}}.jpg" alt="">
+							</div>
+							<div class="product-body">
+								<p class="product-category">{{this.brand}}</p>
+								<h3 class="product-name"><a href="/product-view/{{this._id}}">{{this.name}}</a></h3>
+								<h4 class="product-price">{{this.price}}<del
+										class="product-old-price">{{this.OldPrice}}</del></h4>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4 col-xs-6">
+				<div class="section-title">
+					<h4 class="title">Top selling Jeans</h4>
+					<div class="section-nav">
+						<div id="slick-nav-4" class="products-slick-nav"></div>
+					</div>
+				</div>
+
+				<div class="products-widget-slick" data-nav="#slick-nav-4">
+					<div>
+						<!-- product widget -->
+						{{#each jeansFront}}
+						<div class="product-widget">
+							<div class="product-img">
+								<img src="/product-images/{{this._id}}.jpg" alt="">
+							</div>
+							<div class="product-body">
+								<p class="product-category">{{this.brand}}</p>
+								<h3 class="product-name"><a href="/product-view/{{this._id}}">{{this.name}}</a></h3>
+								<h4 class="product-price">{{this.price}}<del
+										class="product-old-price">{{this.OldPrice}}</del></h4>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+
+			<div class="clearfix visible-sm visible-xs"></div>
+
+			<div class="col-md-4 col-xs-6">
+				<div class="section-title">
+					<h4 class="title">Top Selling T-shirt</h4>
+					<div class="section-nav">
+						<div id="slick-nav-5" class="products-slick-nav"></div>
+					</div>
+				</div>
+
+				<div class="products-widget-slick" data-nav="#slick-nav-5">
+					<div>
+						<!-- product widget -->
+						{{#each tshirtFront}}
+
+						<div class="product-widget">
+							<div class="product-img">
+								<img src="/product-images/{{this._id}}.jpg" alt="">
+							</div>
+							<div class="product-body">
+								<p class="product-category">{{this.brand}}</p>
+								<h3 class="product-name"><a href="/product-view/{{this._id}}">{{this.name}}</a></h3>
+								<h4 class="product-price">{{this.price}}<del
+										class="product-old-price">{{this.OldPrice}}</del></h4>
+							</div>
+						</div>
+						{{/each}}
+
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+
+<!-- /SECTION -->
+
+<!-- NEWSLETTER -->
+
+<!-- /NEWSLETTER -->
+
+<!-- FOOTER -->
+<script>
+	function search_product() {
+		let input = document.getElementById('searchbar').value
+		input = input.toLowerCase();
+		let x = document.getElementsByClassName('product-name');
+		let d = document.getElementsByClassName('product')
+		for (i = 0; i < x.length; i++) {
+			if (!x[i].innerHTML.toLowerCase().includes(input)) {
+				x[i].style.display = "none";
+				d[i].style.display = "none";
+			}
+			else {
+				x[i].style.display = "list-item";
+				d[i].style.display = "block";
+			}
+		}
+	}
+</script>

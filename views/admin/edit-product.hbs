@@ -1,0 +1,240 @@
+<div class="col-md-9 col-8">
+    <section class="p-3">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="text center">
+                        Edit Product </h2>
+                    <form action="/admin/edit-product?id={{product._id}}" method="post" enctype="multipart/form-data">
+                        <span class="error_form" id="name_error_message"></span>
+                        <label form="">Name</label>
+                        <input type="text" name="name" id="form_name" value="{{product.name}}" class="form-control">
+                        <span class="error_form" id="brand_error_message"></span>
+                        <label form="">Brand</label>
+                        <input type="text" name="brand" id="form_brand" value="{{product.brand}}" class="form-control">
+
+                        <span class="error_form" id="description_error_message"></span>
+
+                        <label form="">Description</label>
+                        <input type="text" name="description" value="{{product.description}}" class="form-control">
+
+                        <span class="error_form" id="price_error_message"></span>
+                        <label form="">Price</label>
+                        <input type="text" name="price" id="form_price" value="{{product.price}}" class="form-control">
+                        <br>
+                        {{!-- <label form="">Discount</label>
+                        <input type="number" name="discount" id="" class="form-control" value="{{product.discount}}" ><br> --}}
+
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Category</label>
+                            </div>
+                            <select class="custom-select" value="{{product.category}}" id="category" name="category">
+                                <option selected>Choose...</option>
+                                {{#each listCategory}}
+                                <option value="{{this.catname}}">{{this.catname}}</option>
+                                {{/each}}
+
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Sub Category</label>
+                            </div>
+                            <select class="custom-select" id="subcategory" name="subcategory"
+                                value="{{product.subcategory}}">
+                                <option selected>Choose...</option>
+                                {{#each listSubcategory}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+
+                            </select>
+                        </div>
+                        <span class="error_form" id="quantity_error_message"></span>
+                        <label form="">Quantity</label>
+                        <input type="text" name="quantity" id="form_quantity" value="{{product.quantity}}"
+                            class="form-control">
+                        <br>
+                        <span class="error_form" id="image1_error_message"></span>
+                        
+                        <label class="form-label" id="img1" for="customFile">Image-1</label>
+
+                        <img src="/product-images/{{product._id}}.jpg" alt="" style="width: 50px;height:50px;"
+                            id="imgview">
+                        <input type="file" class="form-control" name="image1" onchange="viewImage(event)" />
+                        <br>
+                        {{!-- <label class="form-label" for="customFile">Image 2</label>
+                        <input type="file" class="form-control" id="customFile" />
+                        <br>
+                        <label class="form-label" for="customFile">Image 3</label>
+                        <input type="file" class="form-control" id="customFile" />
+                        <br> --}}
+
+
+                        <button type="submit" class="btn btn-primary btn-lg">Update</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+<script>
+    function viewImage(event) {
+        document.getElementById('imgview').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>
+
+<script>
+
+
+    $("#name_error_message").hide()
+    $("#brand_error_message").hide()
+    $("#description_error_message").hide()
+    $("#price_error_message").hide()
+    $("#quantity_error_message").hide()
+    $("image1_error_message").hide()
+    var error_name = false;
+    var error_brand = false;
+    var error_description = false;
+    var error_price = false;
+    var error_quantity = false;
+    var error_image1 = false;
+
+    $("#form_name").focusout(function () {
+
+        check_name();
+    });
+    $("#form_brand").focusout(function () {
+        check_brand();
+    });
+    $("#form_description").focusout(function () {
+        check_description();
+    });
+    $("#form_price").focusout(function () {
+        check_price();
+    });
+    $("#form_quantity").focusout(function () {
+        check_quantity();
+    });
+    $("#img1").focusout(function () {
+        check_image1();
+    });
+
+    function check_image1() {
+        var image1 = $("#img1").val();
+        if (image1 !== "") {
+            $("#image1_error_message").hide();
+            $("#img1").css("border-bottom", "2px solid #34F458");
+
+        } else {
+            $("#image1_error_message").html("choose image");
+            $("#image1_error_message").show();
+            $("#img1").css("border-bottom", "2px solid #F90A0A");
+            error_image1 = true;
+        }
+    }
+
+
+    function check_name() {
+        var pattern = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
+        var name = $("#form_name").val();
+
+        if (pattern.test(name) && name !== '') {
+            $("#name_error_message").hide();
+            $("#form_name").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#name_error_message").html("Should contain only Characters");
+            $("#name_error_message").show();
+            $("#form_name").css("border-bottom", "2px solid #F90A0A");
+            error_name = true;
+        }
+    }
+
+    function check_brand() {
+        var pattern = /^[a-zA-Z]*$/;
+        var brand = $("#form_brand").val()
+        if (pattern.test(brand) && brand !== '') {
+            $("#brand_error_message").hide();
+            $("#form_brand").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#brand_error_message").html("Should contain only Characters");
+            $("#brand_error_message").show();
+            $("#form_brand").css("border-bottom", "2px solid #F90A0A");
+            error_brand = true;
+        }
+    }
+
+    function check_description() {
+        var pattern = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
+        var description = $("#form_brand").val()
+        if (pattern.test(description) && description !== '') {
+            $("#description_error_message").hide();
+            $("#form_description").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#description_error_message").html("Should contain only Characters");
+            $("#description_error_message").show();
+            $("#form_description").css("border-bottom", "2px solid #F90A0A");
+            error_description = true;
+        }
+    }
+
+    function check_price() {
+        var pattern = /^[0-9]*$/;
+        var price = $("#form_price").val();
+        if (pattern.test(price) && price !== '') {
+            $("#price_error_message").hide();
+            $("#form_price").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#price_error_message").html("Invalid number");
+            $("#price_error_message").show();
+            $("#form_price").css("border-bottom", "2px solid #F90A0A");
+            error_price = true;
+        }
+    }
+
+    function check_quantity() {
+        var pattern = /^\d{0,8}(\.\d{1,4})?$/;
+        var quantity = $("#form_quantity").val();
+        if (pattern.test(quantity) && quantity !== '') {
+            $("#quantity_error_message").hide();
+            $("#form_quantity").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#quantity_error_message").html("Invalid number");
+            $("#quantity_error_message").show();
+            $("#form_quantity").css("border-bottom", "2px solid #F90A0A");
+            error_quantity = true;
+        }
+    }
+
+    $("#formAddProd").submit(function () {
+        error_name = false;
+        error_brand = false;
+        error_description = false;
+        error_price = false;
+        error_quantity = false;
+        error_image1 = false;
+
+        check_image1();
+        check_name();
+        check_brand();
+        check_description();
+        check_price();
+        check_quantity();
+
+        if (error_name === false && error_brand === false && error_description === false && error_price === false && error_quantity === false && error_image1 == false) {
+            return true;
+        } else {
+            alert("Please Fill the form Correctly");
+            return false;
+        }
+
+
+    });
+
+
+</script>

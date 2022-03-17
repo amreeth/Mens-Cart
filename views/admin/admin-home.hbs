@@ -1,0 +1,219 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+ <div class="col-xl-4 ">
+                <div class="white_card card_height_100 mb_30 user_crm_wrapper" style="display: flex;">
+                        <div class="col-lg-6">
+                            <div class="single_crm">
+                                <div class="crm_head d-flex align-items-center justify-content-between">
+                                    <div class="thumb">
+                                        <img src="img/crm/businessman.svg" alt="">
+                                    </div>
+                                    <i class="fas fa-ellipsis-h f_s_11 white_text"></i>
+                                </div>
+                                <div class="crm_body">
+                                    <h4>₹{{profit}}</h4>
+                                    <p>Total Profit</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="single_crm ">
+                                <div class="crm_head crm_bg_1 d-flex align-items-center justify-content-between">
+                                    <div class="thumb">
+                                        <img src="img/crm/customer.svg" alt="">
+                                    </div>
+                                    <i class="fas fa-ellipsis-h f_s_11 white_text"></i>
+                                </div>
+                                <div class="crm_body">
+                                    <h4>{{totalOrders}}</h4>
+                                    <p>Orders Delivered</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="single_crm">
+                                <div class="crm_head crm_bg_2 d-flex align-items-center justify-content-between">
+                                    <div class="thumb">
+                                        <img src="img/crm/infographic.svg" alt="">
+                                    </div>
+                                    <i class="fas fa-ellipsis-h f_s_11 white_text"></i>
+                                </div>
+                                <div class="crm_body">
+                                    <h4>{{totalProductCount}}</h4>
+                                    <p>Total Products</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="single_crm">
+                                <div class="crm_head crm_bg_3 d-flex align-items-center justify-content-between">
+                                    <div class="thumb">
+                                        <img src="img/crm/sqr.svg" alt="">
+                                    </div>
+                                    <i class="fas fa-ellipsis-h f_s_11 white_text"></i>
+                                </div>
+                                <div class="crm_body">
+                                    <h4>{{totalUsers}}</h4>
+                                    <p>Total User</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+    <div>
+    <div class="d-flex justify-content-center" style="margin-top: 50px;"> 
+        <div class="chart-container" style="position: relative; height:65vh; width:65vw;">
+            <div class="text-center"><h3>TOTAL PRODUCTS & STOCK</h3></div>
+            <div>
+                <canvas id="myChart"  style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"></canvas>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="d-flex justify-content-center" style="margin-top: 120px;" ></div>
+       <div>
+          {{!-- <div class="text-center">TOTAL PRODUCTS SOLD</div> --}}
+          <div class="text-center">TOTAL PROFIT ₹{{profit}}</div>
+           <div class="chart-container" style="position: relative; height:50vh; width:50vw;margin: auto;">
+            <canvas id="chart" style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"></canvas>
+          </div>
+      </div>
+      <div class="d-flex justify-content-center" style="margin-top: 80px;" ></div>
+
+       {{!-- <div>
+          <div class="text-center">DELIVERY STATUS</div>
+          <div class="chart-container" style="position: relative; height:30vh; width:30vw;margin: auto;">
+            <canvas id="newChart" style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"></canvas>
+           </div>
+         </div> --}}
+
+
+
+    
+
+
+<script>
+    var ctx = document.getElementById('myChart');
+    let xvalues = [{{#each products}}'{{this.name}}',{{/each}}]
+    let yvalues = [{{#each products}}'{{this.quantity}}',{{/each}}]
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: xvalues,
+            datasets: [{
+                label: 'Stock',
+                data: yvalues,
+                backgroundColor: [
+                    '#002060',
+                    '#ffc000',
+                    '#c00000',
+                    '#00b050',
+                    '#ffc000',
+                    '#4572a7',
+                    '#FFA500',
+                    '#80fc03',
+                    '#6d9446',
+                    '#b88ff2',
+                    '#4ae8b3',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
+
+<script>
+    var cdx = document.getElementById('chart');
+    var chart = new Chart(cdx, {
+        type: 'pie',
+        data: {
+            labels: ['{{razorPayTotal.[0].status}}', '{{codTotal.[0].status}}','{{paypalTotal.[0].status}}'],
+            datasets: [{
+                label: '# of Votes',
+                data: [{{razorPayTotal.[0].profit}}, {{codTotal.[0].profit}},{{paypalTotal.[0].profit}}],
+                backgroundColor: [
+                    '#0000FF',
+                    '#FFFF00',
+                    '#FF0000',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+<script>
+const cd = document.getElementById('newChart').getContext('2d');
+const newChart = new Chart(cd, {
+    type: 'doughnut',
+    data: {
+        labels: ['{{status.[0].[0].status}}', '{{status.[1].[0].status}}', '{{status.[2].[0].status}}', '{{status.[3].[0].status}}', '{{status.[4].[0].status}}',],
+        datasets: [{
+            label: '# of Votes',
+            data: [{{status.[0].[0].total}}, {{status.[1].[0].total}}, {{status.[2].[0].total}}, {{status.[3].[0].total}}, {{status.[4].[0].total}}],
+            backgroundColor: [
+                '#52d726',
+                '#ffec00',
+                '#ff7300',
+                '#ff0000',
+                '#007ed6',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>

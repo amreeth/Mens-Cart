@@ -1,0 +1,79 @@
+<section>
+  <div class="container">
+    {{#if cartTotal}}
+    <div class="col-md-8 col-8">
+      {{#each products}}
+      <div class="row" style="background-color: rgb(240, 231, 231);  max-width: 55rem;display: flex;margin-top: 10px;">
+        <div class="col-5 col-lg-5" style="margin-top: 5px;">
+          <img style="max-width:100px ;" src="/product-images/{{this.product._id}}.jpg" alt="">
+        </div>
+        <div class="col-7 col-lg-7" style="margin-top: 5px;">
+          <h5 class=" text-truncate">{{this.product.name}}</h5>
+          <div class="d-flex">
+            <p class="">{{this.product.brand}}</p>
+            <p class="ms-4">{{this.product.subcategory}}</p>
+          </div>
+          <p>Rs.{{this.product.price}} </p>
+
+          <button class="cart-item-count mr-3 btn btn-outline-dark"
+            onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+
+          <span id="{{this.product._id}}">{{this.quantity}}</span>
+          <button class="cart-item-count ml-3 btn btn-outline-dark"
+            onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+
+        </div>
+        <div class="col-3 d-flex justify-content-end align-self-start">
+          <a onclick="sweetAlertClick('{{this.product._id}}',event)" id="crossSign" href=""
+            style="text-decoration: none; color: rgb(107, 104, 104); font-size: large;">&#10006;</a>
+        </div>
+      </div>
+      <hr>
+      {{/each}}
+    </div>
+
+    <div class="col-md-4 col-4" style="padding: 2rem;">
+      <div class="card" style="padding-top: 4rem;">
+        <div class="card-body">
+          <div>
+            <h5>Total : Rs.<span id="total">{{cartTotal}}</span></h5>
+          </div>
+          <a href="/place-order" class="btn btn-success" style="width: 70%;">Check Out</a>
+          <a href="/" class="btn btn-primary" style="width: 70%;margin-top: 5px;">Continue shopping</a>
+        </div>
+      </div>
+    </div>
+
+    {{else}}
+    <div class="container">
+      <img style="width: 80%;height: 50%;" src="/images/user/empty-cart.jpg">
+    </div>
+    {{/if}}
+  </div>
+</section>
+
+<script>
+  function sweetAlertClick(id, e) {
+
+    e.preventDefault()
+    swal({
+      title: "Are you sure?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Your product removed from cart!", {
+            icon: "success",
+          }).then(() => {
+            window.location.href = `/removeCartItem/${id}`
+          })
+
+        } else {
+          swal("Your product is safe!");
+        }
+      });
+  }
+
+</script>
