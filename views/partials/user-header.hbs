@@ -4,9 +4,10 @@
 	<!-- MAIN HEADER -->
 	<div id="header">
 		<!-- container -->
-		<div class="container">
+		<div class="container-fluid">
 			<!-- row -->
-			<div class="row">
+			<div class="row d-flex justify-content-between">
+				<div>
 				<!-- LOGO -->
 				<div class="col-md-2">
 					<a href="/">
@@ -18,20 +19,21 @@
 				<!-- SEARCH BAR -->
 				<div class="col-md-5">
 					<div class="header-search">
-						<form>
-							<input style="width:20rem;" class="input" placeholder="Search here" id="searchbar" onkeyup="search_product()"
-								id="myInput">
+						<form method="post" action="/searchproducts">
+							<input style="width:20rem;" class="input" name="item" placeholder="Search here">
 							<button class="search-btn">Search</button>
 						</form>
 					</div>
 				</div>
 				<!-- /SEARCH BAR -->
+				</div>
 
 				<!-- ACCOUNT -->
 				<div class="col-md-4 ">
 					<div class="header-ctn">
 
 						<!-- Wishlist -->
+						{{#if user}}
 						<div>
 							<a href="/wishlist">
 								<i class="fa fa-heart-o"></i>
@@ -53,7 +55,7 @@
 						<!-- /cart -->
 						<!-- My account -->
 
-						{{#if user}}
+						
 						<div>
 							<a href="/profile">
 								<i class="fa fa-user"></i>
@@ -67,10 +69,10 @@
 							</a>
 						</div>
 						{{else}}
-						<div>
-							<a href="/login">
+						<div class="" style="margin-left: auto;" >
+							<a class="text-end" href="/login">
 								<i class="fa fa-user"></i>
-								<span>My account</span>
+								<span>Login</span>
 							</a>
 						</div>
 						{{/if}}

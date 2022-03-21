@@ -10,7 +10,8 @@ var categoryHelper = require('../helpers/category-helpers');
 const couponHelper = require('../helpers/coupon-helpers')
 const wishlistHelper = require('../helpers/wishlist-helpers')
 
-const dotenv=require('dotenv')
+const dotenv = require('dotenv');
+const { Db } = require('mongodb');
 dotenv.config()
 
 let isWallet;
@@ -21,9 +22,9 @@ const client = require("twilio")(process.env.accoutnSID, process.env.authToken);
 
 paypal.configure({
   mode: "sandbox", //sandbox or live
-  client_id:process.env.client_id,
-    
-  client_secret:process.env.client_secret
+  client_id: process.env.client_id,
+
+  client_secret: process.env.client_secret
 });
 
 const verifyLogin = (req, res, next) => {
@@ -64,7 +65,7 @@ router.get('/login', function (req, res) {
   if (req.session.userLoggedIn) {
     res.redirect('/');
   } else {
-    res.render('user/login', { 'loginErr': req.session.loginErr })
+    res.render('user/login', { 'loginErr': req.session.loginErr})
     req.session.loginErr = false
 
   }
@@ -77,7 +78,7 @@ router.get('/login', function (req, res) {
 router.get('/signup', function (req, res) {
 
   // console.log(req.query.valid);
-  res.render('user/signup')
+  res.render('user/signup',)
 });
 
 //////////////*post signup page*/////////////////////
@@ -196,7 +197,7 @@ router.post("/verify-number", async (req, res) => {
     let error = "user doesn't exist"
     console.log("else case worked");
 
-    res.render('user/otp-login',{error})
+    res.render('user/otp-login', { error })
   }
 
 });
@@ -397,7 +398,7 @@ router.get('/place-order', verifyLogin, async (req, res) => {
     mrpDiscount = 0;
   } else {
     mrpDiscount = mrp - total
-    console.log(mrp+ "-"+total);
+    console.log(mrp + "-" + total);
   }
   let address = await addressHelpers.getAlladdress(user)
   let userDetails = await userHelpers.getUserDetials(userId)
@@ -424,7 +425,7 @@ router.post('/place-order', verifyLogin, async (req, res) => {
 
   console.log(req.body);
 
-  
+
   req.body.userId = req.session.userLoggedIn._id
 
   let products = await userHelpers.getCartProductList(req.body.userId)
@@ -432,8 +433,8 @@ router.post('/place-order', verifyLogin, async (req, res) => {
   let totalPriceArr = await userHelpers.getTotalAmount(req.body.userId)
   let totalPrice = totalPriceArr[0].total
 
-  if(req.body.checked){
-    
+  if (req.body.checked) {
+
     let walletAmount = req.body.checked;
     totalPrice = totalPrice - walletAmount;
     console.log(totalPrice);
@@ -468,7 +469,7 @@ router.post('/place-order', verifyLogin, async (req, res) => {
         res.json(response)
       })
     } else if (req.body['payment-method'] === 'PAYPAL') {
-      req.session.orderId=orderId;
+      req.session.orderId = orderId;
       // console.log('hi');
       const create_payment_json = {
         "intent": "sale",
@@ -476,8 +477,8 @@ router.post('/place-order', verifyLogin, async (req, res) => {
           "payment_method": "paypal",
         },
         "redirect_urls": {
-          "return_url": "http://localhost:3000/success",
-          "cancel_url": "http://localhost:3000/cancel",
+          "return_url": "https://amreeth.online/success",
+          "cancel_url": "https://amreeth.online/cancel",
         },
         "transactions": [
           {
@@ -547,10 +548,10 @@ router.get("/success", (req, res) => {
       throw error;
     } else {
       console.log(JSON.stringify(payment));
-      console.log(req.session.orderId+" "+req.session.userLoggedIn._id);
+      console.log(req.session.orderId + " " + req.session.userLoggedIn._id);
 
       console.log("BEFORE STATUS CHANGE");
-      userHelpers.changePaymentStatus(req.session.orderId,req.session.userLoggedIn._id).then(() => {
+      userHelpers.changePaymentStatus(req.session.orderId, req.session.userLoggedIn._id).then(() => {
 
         res.redirect('/order-success')
       })
@@ -566,10 +567,10 @@ router.get('/cancel', (req, res) => {
 
 router.post('/verify-payment', (req, res) => {
   console.log(req.body);
-  let userId=req.session.userLoggedIn._id;
+  let userId = req.session.userLoggedIn._id;
 
   userHelpers.verifyPayment(req.body).then(() => {
-    userHelpers.changePaymentStatus(req.body['order[receipt]'],userId).then(() => {
+    userHelpers.changePaymentStatus(req.body['order[receipt]'], userId).then(() => {
       console.log('payment successfull');
       res.json({ status: true })
     })
@@ -766,9 +767,9 @@ router.post('/edit-address', verifyLogin, (req, res) => {
 
 /*post delete address*/
 
-router.get('/delete-address/:id',verifyLogin,(req,res)=>{
+router.get('/delete-address/:id', verifyLogin, (req, res) => {
 
-  addressHelpers.deleteAddress(req.params.id).then(()=>{
+  addressHelpers.deleteAddress(req.params.id).then(() => {
     res.redirect('/view-address')
   })
 })
@@ -830,7 +831,7 @@ router.get('/casual-shirt', async (req, res) => {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
   let casualShirt = await productHelpers.getCasualShirts()
-  res.render('user/casualShirts',{ userheader: true, casualShirt, cartCount, user })
+  res.render('user/casualShirts', { userheader: true, casualShirt, cartCount, user })
 })
 
 /*get formal shirt*/
@@ -841,8 +842,8 @@ router.get('/formal-shirt', async (req, res) => {
   if (req.session.userLoggedIn) {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
-  let formalshirt=await productHelpers.getFormalshirt()
-  res.render('user/formalShirts',{ userheader: true, formalshirt, cartCount, user })
+  let formalshirt = await productHelpers.getFormalshirt()
+  res.render('user/formalShirts', { userheader: true, formalshirt, cartCount, user })
 })
 
 
@@ -855,7 +856,7 @@ router.get('/tshirt', async (req, res) => {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
   let tshirt = await productHelpers.getTshirt()
-  res.render('user/tShirt',{ userheader: true, tshirt, cartCount, user })
+  res.render('user/tShirt', { userheader: true, tshirt, cartCount, user })
 })
 
 /*get Jeans */
@@ -866,7 +867,7 @@ router.get('/jeans', async (req, res) => {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
   let jeans = await productHelpers.getJeans()
-  res.render('user/jeans',{ userheader: true, jeans, cartCount, user })
+  res.render('user/jeans', { userheader: true, jeans, cartCount, user })
 
 })
 
@@ -877,8 +878,8 @@ router.get('/formal-trousers', async (req, res) => {
   if (req.session.userLoggedIn) {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
-  let formalTrouser=await productHelpers.getFormalTrousers()
-  res.render('user/formalTrousers',{ userheader: true, formalTrouser, cartCount, user })
+  let formalTrouser = await productHelpers.getFormalTrousers()
+  res.render('user/formalTrousers', { userheader: true, formalTrouser, cartCount, user })
 
 })
 
@@ -889,8 +890,8 @@ router.get('/casual-trousers', async (req, res) => {
   if (req.session.userLoggedIn) {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
-  let casualTrousers=await productHelpers.getCasualTrousers()
-  res.render('user/casualTrousers',{ userheader: true, casualTrousers, cartCount, user })
+  let casualTrousers = await productHelpers.getCasualTrousers()
+  res.render('user/casualTrousers', { userheader: true, casualTrousers, cartCount, user })
 
 })
 
@@ -915,7 +916,7 @@ router.get('/wallet', verifyLogin, async (req, res) => {
   let referId = user._id;
   let userId = user._id;
 
-  let referLink = `http://localhost:3000/signup/${referId}`;
+  let referLink = `https://amreeth.online/signup/${referId}`;
 
 
   if (req.session.userLoggedIn) {
@@ -932,7 +933,19 @@ router.get('/wallet', verifyLogin, async (req, res) => {
 
 })
 
+//seach //
 
+router.post('/searchproducts', async (req, res) => {
+  let user = req.session.userLoggedIn
+  let cartCount = null;
+  // console.log(req.body.item, '1111111111111111111111111');
+  if (req.session.userLoggedIn) {
+    cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
+  }
+  let searchedproducts = await productHelpers.searchProducts(req.body.item)
+  console.log(searchedproducts,'seachrddddddddddddddd itemss');
+  res.render('user/search', { userheader: true, user, cartCount, searchedproducts })
+})
 
 
 

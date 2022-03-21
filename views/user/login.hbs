@@ -25,6 +25,9 @@
 </head>
 
 <body>
+    <header>
+        <h1><a style="text-decoration: none;color:black;" href="/"> MensCart</a></h1>
+    </header>
     <section class="h-100 p-5">
         <div class="container-fluid ">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -33,21 +36,24 @@
 
                     <form action="/login" method="post">
                         {{#if error}}
-                        <p class="error text-danger" style="font-size: large;font-family: 'Times New Roman', Times, serif;">{{error}}</p>
+                        <p class="error text-danger"
+                            style="font-size: large;font-family: 'Times New Roman', Times, serif;">{{error}}</p>
                         {{/if}}
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="form3Example3" style="width: 35rem;font-family: cursive;" name="email"
-                                 class="form-control form-control-lg"
+                            <input type="email" id="form3Example3" style="width: 35rem;font-family: cursive;"
+                                name="email" class="form-control form-control-lg"
                                 placeholder="Enter the email address" />
-                            <label style="font-family: cursive;font-size:1.5rem;" class="form-label" for="form3Example3">Email address</label>
+                            <label style="font-family: cursive;font-size:1.5rem;" class="form-label"
+                                for="form3Example3">Email address</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" style="width: 35rem;font-family: cursive;" id="form3Example4" name="password"
-                                 class="form-control form-control-lg"  placeholder="Enter password" />
-                            <label  style="font-family: cursive;font-size:1.5rem;" class="form-label" for="form3Example4">Password</label>
+                            <input type="password" style="width: 35rem;font-family: cursive;" id="form3Example4"
+                                name="password" class="form-control form-control-lg" placeholder="Enter password" />
+                            <label style="font-family: cursive;font-size:1.5rem;" class="form-label"
+                                for="form3Example4">Password</label>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
@@ -63,11 +69,13 @@
                             <button type="submit" class="btn btn-success btn-lg"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button><br>
                             <div class="m-3">
-                                
+
                                 <h4 style="font-family: cursive;">OR</h4>
-                                <a style="text-decoration: none;font-size: large;font-family: cursive;" href="/otp-login" >Login with OTP </a>
+                                <a style="text-decoration: none;font-size: large;font-family: cursive;"
+                                    href="/otp-login">Login with OTP </a>
                             </div>
-                            <p class=" fw-bold mt-2 pt-1 mb-0" style="font-family: cursive;font-size: large;">Don't have an account? <a style="text-decoration: none;font-size: large;" href="signup"
+                            <p class=" fw-bold mt-2 pt-1 mb-0" style="font-family: cursive;font-size: large;">Don't have
+                                an account? <a style="text-decoration: none;font-size: large;" href="signup"
                                     class="link-danger">Register</a></p>
                         </div>
                     </form>
