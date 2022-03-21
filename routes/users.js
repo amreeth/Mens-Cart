@@ -943,7 +943,7 @@ router.post('/searchproducts', async (req, res) => {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }
   let searchedproducts = await productHelpers.searchProducts(req.body.item)
-  console.log(searchedproducts,'seachrddddddddddddddd itemss');
+  // console.log(searchedproducts,'seachrddddddddddddddd itemss');
   res.render('user/search', { userheader: true, user, cartCount, searchedproducts })
 })
 
