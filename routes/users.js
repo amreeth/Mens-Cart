@@ -9,6 +9,7 @@ const orderHelpers = require('../helpers/order-helpers')
 var categoryHelper = require('../helpers/category-helpers');
 const couponHelper = require('../helpers/coupon-helpers')
 const wishlistHelper = require('../helpers/wishlist-helpers')
+const offerHelper = require('../helpers/offer-helpers')
 
 const dotenv = require('dotenv');
 const { Db } = require('mongodb');
@@ -65,7 +66,7 @@ router.get('/login', function (req, res) {
   if (req.session.userLoggedIn) {
     res.redirect('/');
   } else {
-    res.render('user/login', { 'loginErr': req.session.loginErr})
+    res.render('user/login', { 'loginErr': req.session.loginErr })
     req.session.loginErr = false
 
   }
@@ -422,42 +423,28 @@ router.get('/place-order', verifyLogin, async (req, res) => {
 
 router.post('/place-order', verifyLogin, async (req, res) => {
   // console.log(req.body, 'jgjhbhg');
-
-  console.log(req.body);
-
-
   req.body.userId = req.session.userLoggedIn._id
-
   let products = await userHelpers.getCartProductList(req.body.userId)
-
   let totalPriceArr = await userHelpers.getTotalAmount(req.body.userId)
   let totalPrice = totalPriceArr[0].total
 
   if (req.body.checked) {
-
     let walletAmount = req.body.checked;
     totalPrice = totalPrice - walletAmount;
     console.log(totalPrice);
   }
-
-  console.log(totalPrice);
-
+  console.log(totalPrice, 'totalprice');
   let userAddress = await userHelpers.getUserAddress(req.body.addressid)
-  // console.log(userAddress, 'usdifodjfpqkpokpdkpkdkwekfk');
-  console.log(totalPrice);
 
   let discount = null;
-  let user = await userHelpers.getUserDetials(req.body.userId)
 
+  let user = await userHelpers.getUserDetials(req.body.userId)
   if (user.couponamount) {
     discount = user.couponamount;
     totalPrice = totalPrice - discount;
   }
-
   let tot = parseFloat(totalPrice / 75).toFixed(2)
-
-
-  console.log(tot);
+  // console.log(tot);
   req.session.totalAmount = tot
 
   userHelpers.placeOrder(req.body, products, totalPrice, userAddress, discount).then((orderId) => {
@@ -469,6 +456,7 @@ router.post('/place-order', verifyLogin, async (req, res) => {
         res.json(response)
       })
     } else if (req.body['payment-method'] === 'PAYPAL') {
+
       req.session.orderId = orderId;
       // console.log('hi');
       const create_payment_json = {
@@ -477,7 +465,7 @@ router.post('/place-order', verifyLogin, async (req, res) => {
           "payment_method": "paypal",
         },
         "redirect_urls": {
-          "return_url": "https://amreeth.online/success",
+          "return_url": "https://amreeth.online/success?orderId=" + orderId + "&tot=" + tot,
           "cancel_url": "https://amreeth.online/cancel",
         },
         "transactions": [
@@ -523,10 +511,11 @@ router.post('/place-order', verifyLogin, async (req, res) => {
 router.get("/success", (req, res) => {
   console.log('2');
 
-
   let orderId = req.query.orderId;
-  let tot = req.session.totalAmount
+  // let tot = req.session.totalAmount
+  let tot = req.query.tot;
   console.log(tot);
+  
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
 
@@ -548,11 +537,9 @@ router.get("/success", (req, res) => {
       throw error;
     } else {
       console.log(JSON.stringify(payment));
-      console.log(req.session.orderId + " " + req.session.userLoggedIn._id);
-
-      console.log("BEFORE STATUS CHANGE");
+      // console.log(req.session.orderId + " " + req.session.userLoggedIn._id);
+      // console.log("BEFORE STATUS CHANGE");
       userHelpers.changePaymentStatus(req.session.orderId, req.session.userLoggedIn._id).then(() => {
-
         res.redirect('/order-success')
       })
     }
@@ -621,10 +608,6 @@ router.get('/order-details/:id', verifyLogin, async (req, res) => {
     if (orderStatus == 'placed') {
       orderStatus = true
     }
-    // console.log(orderDetails, 'gffjhkj;');
-    // console.log(orderId, 'orderid');
-    // console.log(address);
-    // console.log(orderStatus,'11111111111111111111111111111');
 
     res.render('user/one-order-details', { userheader: true, user, orderDetails, address, cartCount, orderId, orderStatus, cancelStatus, deliveryStatus, shippedStatus })
   })
@@ -903,9 +886,11 @@ router.get('/casual-trousers', async (req, res) => {
 router.get('/coupons-offers', verifyLogin, async (req, res) => {
   let user = req.session.userLoggedIn
   let coupons = await couponHelper.getAllCoupons()
+  let productoffer = await offerHelper.viewOfferPro()
+  let categoryoffer = await offerHelper.getCategoryOffer()
 
-  console.log(coupons, '111111111111');
-  res.render('user/coupons-offers', { userheader: true, user, coupons })
+  // console.log(coupons, '111111111111');
+  res.render('user/coupons-offers', { userheader: true, user, coupons, productoffer, categoryoffer })
 })
 
 
@@ -933,12 +918,11 @@ router.get('/wallet', verifyLogin, async (req, res) => {
 
 })
 
-//seach //
+///////////////////seach//////////////////////////
 
 router.post('/searchproducts', async (req, res) => {
   let user = req.session.userLoggedIn
   let cartCount = null;
-  // console.log(req.body.item, '1111111111111111111111111');
   if (req.session.userLoggedIn) {
     cartCount = await userHelpers.getCartCount(req.session.userLoggedIn._id)
   }

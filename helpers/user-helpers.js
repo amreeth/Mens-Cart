@@ -470,15 +470,13 @@ module.exports = {
 
     changePaymentStatus: (orderId,userID) => {
         return new Promise((resolve, reject) => {
-
-            console.log("Paypal");
-            console.log(orderId+" "+userID);
+            // console.log("Paypal");
+            // console.log(orderId+" "+userID);
             db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: objectId(orderId) }, {
                 $set: {
                     status: 'placed'
                 }
             }).then(() => {
-
                 db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userID) }, {
                     $unset: { couponamount: "" }
                 })

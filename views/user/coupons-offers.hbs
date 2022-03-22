@@ -21,7 +21,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <a href="/view-address">Address</a>
                         </li>
-                       <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <a href="/order-status"> My Orders</a>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -36,8 +36,10 @@
             </div>
             <div class="col-md-8">
                 <div style="text-align: center;">
-                    <h3>Coupons</h3>
+                    <h2>Coupons</h2>
                 </div>
+                <br>
+                {{#if coupons}}
                 {{#each coupons}}
                 <div class="" style="background-color: rgb(248, 248, 248);  max-width: 50rem;margin: auto;">
                     <div class=""
@@ -45,17 +47,72 @@
                         <div class="col-6 pl-sm-4">
                             <div style="text-align: center;padding-top: 10px;">
                                 <h5>Coupon Code : <span style="color: green;">{{this.coupon}} </span> </h5>
-                                <h6>You will get <span style="color: red;">Rs.{{this.price}} </span>discount on your purchase </h6>
+                                <h6>You will get <span style="color: red;">Rs.{{this.price}} </span>discount on your
+                                    purchase </h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr>
                 {{/each}}
-                 <div style="text-align: center;">
-                    <h3>Available Offers</h3>
+                {{else}}
+                <div class="" style="background-color: rgb(248, 248, 248);  max-width: 50rem;margin: auto;">
+                    <h4 style="color: red;">No Coupons Available</h4>
                 </div>
-            
+                {{/if}}
+                <br>
+                <div style="text-align: center;">
+                    <h2>Available Offers</h2>
+                </div>
+                <h4 style="color: rgb(86, 86, 235);">Product Offers</h4>
+                <br>
+                {{#if productoffer}}
+                {{#each productoffer}}
+                <div class="" style="background-color: rgb(248, 248, 248);  max-width: 50rem;margin: auto;">
+                    <div class=""
+                        style="background-color: rgb(248, 248, 248);margin-left: 20px;padding-bottom: 15px; padding-top: 15px;">
+                        <div class="col-6 pl-sm-4">
+                            <div style="text-align: center;padding-top: 10px;">
+                                <h5>Offer Type : <span style="color: green;">{{this.offerType}} </span> </h5>
+                                <h6>You will get <span style="color: red;">{{this.discount}} %</span>discount on your
+                                    purchase </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                {{/each}}
+                {{else}}
+                <div class="" style="background-color: rgb(248, 248, 248);  max-width: 50rem;margin: auto;">
+                    <h4 style="color: red;">No productoffer Available</h4>
+                </div>
+                {{/if}}
+
+                <hr>
+
+                <h4 style="color: rgb(86, 86, 235);">Category Offers</h4>
+                {{#if categoryoffer}}
+                {{#each categoryoffer}}
+                <div class="" style="background-color: rgb(248, 248, 248);  max-width: 50rem;margin: auto;">
+                    <div class=""
+                        style="background-color: rgb(248, 248, 248);margin-left: 20px;padding-bottom: 15px; padding-top: 15px;">
+                        <div class="col-6 pl-sm-4">
+                            <div style="text-align: center;padding-top: 10px;">
+                                <h5>Offer Type : <span style="color: green;">{{this.offerType}} </span> </h5>
+                                <h6>You will get <span style="color: red;">{{this.discount}} % </span>discount on your
+                                    purchase </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                {{/each}}
+                {{else}}
+                <div class="" style="background-color: rgb(248, 248, 248);  max-width: 50rem;margin: auto;">
+                    <h4 style="color: red;">No categoryoffer Available</h4>
+                </div>
+                {{/if}}
+
             </div>
         </div>
 

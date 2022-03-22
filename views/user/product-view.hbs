@@ -13,19 +13,6 @@
 					<div class="product-preview">
 						<img src="/product-images/{{product._id}}.jpg" alt="">
 					</div>
-
-					{{!-- <div class="product-preview">
-						<img src="/product-images/{{product._id}}image2.jpg" alt="">
-					</div>
-
-					<div class="product-preview">
-						<img src="/product-images/{{product._id}}image3.jpg" alt="">
-					</div> --}}
-
-					{{!-- <div class="product-preview">
-						<img src="./img/product08.png" alt="">
-					</div> --}}
-
 				</div>
 			</div>
 			<!-- /Product main img -->
@@ -33,12 +20,12 @@
 			<!-- Product thumb imgs -->
 			<div class="col-md-2  col-md-pull-5">
 				<div id="product-imgs">
-					<div class="product-preview" >
+					<div class="product-preview">
 						<img src="/product-images/{{product._id}}.jpg" alt="">
 					</div>
 
 					<div class="product-preview" id="img-container">
-						<img src="/product-images/{{product._id}}image2.jpg" alt="">
+						<img src="/product-images/{{product._id}}image2.jpg" alt="" >
 					</div>
 
 					<div class="product-preview" id="img-container2">
@@ -67,14 +54,7 @@
 					</div>
 					<p>{{product.description}}</p>
 					<div class="add-to-cart">
-						{{!-- <div class="qty-label">
-							Qty
-							<div class="input-number">
-								<input type="number">
-								<span class="qty-up">+</span>
-								<span class="qty-down">-</span>
-							</div>
-						</div> --}}
+		
 						<button onclick="addToCart('{{product._id}}')" class="add-to-cart-btn"><i
 								class="fa fa-shopping-cart"></i> add to cart</button>
 					</div>
@@ -83,7 +63,7 @@
 						<li><button onclick="addToWishlist('{{product._id}}')" class="add-to-wishlist"><i
 									class="fa fa-heart-o"></i><span class="tooltipp"></span></button> add to wishlist
 						</li>
-						{{!-- <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li> --}}
+
 					</ul>
 
 					<ul class="product-links">

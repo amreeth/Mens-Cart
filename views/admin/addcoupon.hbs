@@ -1,3 +1,5 @@
+ <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+
 <div class="row p-5">
     <form action="/admin/addcoupon" method="post">
         <div class="form-group">
@@ -7,10 +9,21 @@
             <input type="number" name="price">
             <br>
             <label>From</label><br>
-            <input type="date" name="fromdate"><br>
+            <input type="date" name="fromdate" id="date_picker"><br>
             <label>To</label><br>
-            <input type="date" name="todate">
+            <input type="date" name="todate" id="expr_date">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<script>
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#date_picker').attr('min', today);
+     $('#expr_date').attr('min', today);
+</script>

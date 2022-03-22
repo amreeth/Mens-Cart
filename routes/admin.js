@@ -305,17 +305,29 @@ router.get('/coupons', verifyLogin, (req, res) => {
 
 
 /*get add coupon */
+
 router.get('/addcoupn', verifyLogin, (req, res) => {
     res.render('admin/addcoupon', { layout: 'admin-layout.hbs', admin: true })
 })
 
 /*post add coupon */
+
 router.post('/addcoupon', verifyLogin, (req, res) => {
     // console.log(req.body);
     couponHelper.addCoupon(req.body).then(() => {
         res.redirect('/admin/coupons')
     })
 })
+
+/*get delete couponn */
+
+router.get('/deletecoupon/:id',(req,res)=>{
+console.log(req.params.id);
+    couponHelper.deleteCoupon(req.params.id).then(()=>{
+        res.redirect('/admin/coupons')
+    })
+})
+
 
 
 ////////////////*get sales report*//////////////////////
