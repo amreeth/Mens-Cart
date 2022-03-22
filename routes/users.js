@@ -457,6 +457,7 @@ router.post('/place-order', verifyLogin, async (req, res) => {
       })
     } else if (req.body['payment-method'] === 'PAYPAL') {
 
+      let orderId=orderId.toString()
       req.session.orderId = orderId;
       // console.log('hi');
       const create_payment_json = {
@@ -465,7 +466,7 @@ router.post('/place-order', verifyLogin, async (req, res) => {
           "payment_method": "paypal",
         },
         "redirect_urls": {
-          "return_url": "https://amreeth.online/success?orderId=" + orderId + "&tot=" + tot,
+          "return_url": "https://amreeth.online/success",
           "cancel_url": "https://amreeth.online/cancel",
         },
         "transactions": [
@@ -491,13 +492,16 @@ router.post('/place-order', verifyLogin, async (req, res) => {
       };
 
       paypal.payment.create(create_payment_json, function (error, payment) {
+        
+        console.log('reached here');
         if (error) {
           throw error;
         } else {
           for (let i = 0; i < payment.links.length; i++) {
             if (payment.links[i].rel === "approval_url") {
+              console.log('paypal,,,,,,,,,,');
               console.log(payment.links[i]);
-              res.json({ paypal: true, val: payment.links[i].href });
+              res.json({ paypal: true, 'val': payment.links[i].href });
             }
           }
         }
@@ -511,11 +515,12 @@ router.post('/place-order', verifyLogin, async (req, res) => {
 router.get("/success", (req, res) => {
   console.log('2');
 
-  let orderId = req.query.orderId;
-  // let tot = req.session.totalAmount
-  let tot = req.query.tot;
+  let orderId = req.session.orderId;
+  console.log(orderId);
+
+  let tot = req.session.totalAmount
+  // let tot = req.query.tot;
   console.log(tot);
-  
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
 

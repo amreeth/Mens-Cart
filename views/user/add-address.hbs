@@ -1,9 +1,10 @@
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- SECTION -->
 <div class="section">
     <!-- container -->
     <div class="container">
         <!-- row -->
-        <form action="/add-address" id="" method="post">
+        <form action="/add-address" id="registration_form" method="post">
             <div class="row">
                 <div>
                     <!-- Billing Details -->
@@ -12,32 +13,46 @@
                             <h3 class="title">Add address</h3>
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="firstname" placeholder="First Name">
+                            <span class="error_form" id="fname_error_message"></span>
+                            <input class="input" type="text" name="firstname" placeholder="First Name" id="form_fname">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="lastname" placeholder="Last Name">
+                            <span class="error_form" id="lname_error_message"></span>
+
+                            <input class="input" type="text" name="lastname" placeholder="Last Name" id="form_sname">
+
                         </div>
                         <div class="form-group">
-                            <input class="input" type="email" name="email" placeholder="Email">
+                             <span class="error_form" id="email_error_message"></span>
+                            <input class="input" type="email" name="email" placeholder="Email" id="form_email">
+                        </div>
+
+                        <div class="form-group">
+                            <span class="error_form" id="address_error_message"></span>
+                            <input class="input" type="text" name="address" placeholder="Address" id="address">
+                        </div>
+
+                        <div class="form-group">
+                            <span class="error_form" id="city_error_message"></span>
+                            <input class="input" type="text" name="city" placeholder="City" id="city">
+                        </div>
+
+                        <div class="form-group">
+                            <span class="error_form" id="country_error_message"></span>
+                            <input class="input" type="text" name="country" placeholder="Country" id="country">
+                        </div>
+
+                        <div class="form-group">
+                            <span class="error_form" id="zipcode_error_message"></span>
+                            <input class="input" type="text" name="zipcode" placeholder="ZIP Code" id="zipcode">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="address" placeholder="Address">
-                        </div>
-                        <div class="form-group">
-                            <input class="input" type="text" name="city" placeholder="City">
-                        </div>
-                        <div class="form-group">
-                            <input class="input" type="text" name="country" placeholder="Country">
-                        </div>
-                        <div class="form-group">
-                            <input class="input" type="text" name="zipcode" placeholder="ZIP Code">
-                        </div>
-                        <div class="form-group">
-                            <input class="input" type="tel" name="tel" placeholder="Telephone">
+                             <span class="error_form" id="mob_error_message"></span>
+                            <input class="input" type="tel" name="tel" placeholder="Telephone" id="form_mob">
                         </div>
                         <input type="text" name="userId" id="" value="{{user._id}}" hidden>
-                        
-                            <button type="submit" class="btn btn-danger">ADD ADDRESS</button>
+
+                        <button type="submit" class="btn btn-danger">ADD ADDRESS</button>
                     </div>
                 </div>
         </form>
@@ -46,3 +61,131 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+<script>
+    $("#fname_error_message").hide()
+    $("#lname_error_message").hide()
+    $("#email_error_message").hide()
+    $("#mob_error_message").hide()
+    
+
+
+    var error_fname = false;
+    var error_lname = false;
+    var error_email = false;
+    var error_mobno = false;
+    
+
+    $("#form_fname").focusout(function () {
+        check_fname();
+    });
+    $("#form_sname").focusout(function () {
+        check_sname();
+    });
+    $("#form_email").focusout(function () {
+        check_email();
+    });
+    $("#form_mob").focusout(function () {
+        check_mob();
+    });
+    
+
+    function check_fname() {
+        var pattern = /^[a-zA-Z]*$/;
+        var fname = $("#form_fname").val();
+        if (pattern.test(fname) && fname !== '') {
+            $("#fname_error_message").hide();
+            $("#form_fname").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#fname_error_message").html("Should contain only Characters");
+            $("#fname_error_message").show();
+            $("#form_fname").css("border-bottom", "2px solid #F90A0A");
+            error_fname = true;
+        }
+    }
+
+    function check_sname() {
+        var pattern = /^[a-zA-Z]*$/;
+        var sname = $("#form_sname").val()
+        if (pattern.test(sname) && sname !== '') {
+            $("#sname_error_message").hide();
+            $("#form_sname").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#sname_error_message").html("Should contain only Characters");
+            $("#sname_error_message").show();
+            $("#form_sname").css("border-bottom", "2px solid #F90A0A");
+            error_sname = true;
+        }
+    }
+
+    
+
+    function check_email() {
+        var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        var email = $("#form_email").val();
+        if (pattern.test(email) && email !== '') {
+            $("#email_error_message").hide();
+            $("#form_email").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#email_error_message").html("Invalid Email");
+            $("#email_error_message").show();
+            $("#form_email").css("border-bottom", "2px solid #F90A0A");
+            error_email = true;
+        }
+    }
+    function check_mob() {
+        var pattern = /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/;
+        var mob = $("#form_mob").val();
+        if (pattern.test(mob) && mob !== '' && mob.length == 10) {
+            $("#mob_error_message").hide();
+            $("#form_mob").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#mob_error_message").html("Invalid Mobile NO");
+            $("#mob_error_message").show();
+            $("#form_mob").css("border-bottom", "2px solid #F90A0A");
+            error_mobno = true;
+        }
+    }
+
+    function check_address() {
+        var pattern = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
+
+        var sname = $("#address").val()
+        if (pattern.test(sname) && sname !== '') {
+            $("#address_error_message").hide();
+            $("#address").css("border-bottom", "2px solid #34F458");
+        } else {
+            $("#address_error_message").html("Enter the full address");
+            $("#address_error_message").show();
+            $("#address").css("border-bottom", "2px solid #F90A0A");
+            error_address = true;
+        }
+    }
+
+    $("#registration_form").submit(function () {
+        error_fname = false;
+        error_sname = false;
+        error_email = false;
+        error_mobno = false;
+        error_address =false;
+
+        
+        check_fname();
+        check_sname();
+        check_email();
+        check_mob();
+        check_address();
+      
+
+        if (error_fname === false && error_sname === false && error_email === false && error_mobno === false&&error_address===false) {
+
+            return true;
+        } else {
+            alert("Please Fill the form Correctly");
+            return false;
+        }
+
+
+    });
+
+
+</script>
