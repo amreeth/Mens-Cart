@@ -459,7 +459,9 @@ router.post('/place-order', verifyLogin, async (req, res) => {
 
       let orderId=orderId.toString()
       req.session.orderId = orderId;
-      // console.log('hi');
+
+      console.log(orderId,'hiiiiiiii');
+
       const create_payment_json = {
         "intent": "sale",
         "payer": {
@@ -925,7 +927,7 @@ router.get('/wallet', verifyLogin, async (req, res) => {
 
 ///////////////////seach//////////////////////////
 
-router.post('/searchproducts', async (req, res) => {
+router.post('/search', async (req, res) => {
   let user = req.session.userLoggedIn
   let cartCount = null;
   if (req.session.userLoggedIn) {
